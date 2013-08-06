@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AK.FinanceManager.Contracts.Services", "AK.FinanceManager.Contracts.Services\AK.FinanceManager.Contracts.Services.csproj", "{DF8E79D5-0F50-4B17-8062-2DF4F36CB1B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AK.FinanceManager.Contracts.DataAccess", "AK.FinanceManager.Contracts.DataAccess\AK.FinanceManager.Contracts.DataAccess.csproj", "{FB3DDDA5-F72D-4E0A-A2D8-F96D25C7519D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AK.FinanceManager.DataAccess", "AK.FinanceManager.DataAccess\AK.FinanceManager.DataAccess.csproj", "{71858E05-B403-44BB-881D-27D830FAB801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AK.FinanceManager.Services", "AK.FinanceManager.Services\AK.FinanceManager.Services.csproj", "{90282276-ECB6-4F48-BBD8-05F6AD914BCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AK.FinanceManager.Model", "AK.FinanceManager.Model\AK.FinanceManager.Model.csproj", "{17E2AC1A-9302-4FBF-9FC9-576A58428499}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C5CE955D-33A6-4EEF-B5FE-D3FCAF53290F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AK.FinanceManager.Web", "AK.FinanceManager.Web\AK.FinanceManager.Web.csproj", "{6462DF19-1401-4F5D-A529-269FCDB61B4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF8E79D5-0F50-4B17-8062-2DF4F36CB1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF8E79D5-0F50-4B17-8062-2DF4F36CB1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF8E79D5-0F50-4B17-8062-2DF4F36CB1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF8E79D5-0F50-4B17-8062-2DF4F36CB1B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB3DDDA5-F72D-4E0A-A2D8-F96D25C7519D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB3DDDA5-F72D-4E0A-A2D8-F96D25C7519D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB3DDDA5-F72D-4E0A-A2D8-F96D25C7519D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB3DDDA5-F72D-4E0A-A2D8-F96D25C7519D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71858E05-B403-44BB-881D-27D830FAB801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71858E05-B403-44BB-881D-27D830FAB801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71858E05-B403-44BB-881D-27D830FAB801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71858E05-B403-44BB-881D-27D830FAB801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90282276-ECB6-4F48-BBD8-05F6AD914BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90282276-ECB6-4F48-BBD8-05F6AD914BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90282276-ECB6-4F48-BBD8-05F6AD914BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90282276-ECB6-4F48-BBD8-05F6AD914BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E2AC1A-9302-4FBF-9FC9-576A58428499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E2AC1A-9302-4FBF-9FC9-576A58428499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E2AC1A-9302-4FBF-9FC9-576A58428499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E2AC1A-9302-4FBF-9FC9-576A58428499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6462DF19-1401-4F5D-A529-269FCDB61B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6462DF19-1401-4F5D-A529-269FCDB61B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6462DF19-1401-4F5D-A529-269FCDB61B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6462DF19-1401-4F5D-A529-269FCDB61B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

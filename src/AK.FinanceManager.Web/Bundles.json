@@ -1,0 +1,52 @@
+﻿{
+    Minify: false,
+    BundleItems: [{
+            Type: "Css",
+            Path: "~/Content/Bundles/Styles",
+            IncludedFiles: [
+                "~/Content/css/bootstrap.min.css",
+                "~/Content/css/app.css"
+            ]
+        },
+        {
+            Type: "JavaScript",
+            Path: "~/Content/Bundles/Scripts/Common",
+            IncludedFiles: [
+                "~/Scripts/jquery-1.9.1.min.js",
+                "~/Scripts/bootstrap.min.js",
+                "~/Scripts/angular.min.js",
+                "~/Scripts/angular-resource.min.js"
+            ]
+        },
+        {
+            Type: "JavaScript",
+            Path: "~/Content/Bundles/Scripts/App",
+            IncludedFiles: [
+				"~/Scripts/finance-manager/utils.js",
+				"~/Scripts/finance-manager/view-models.js",
+				"~/Scripts/finance-manager/resources.js",
+				"~/Scripts/finance-manager/directives.js",
+				"~/Scripts/finance-manager/services/services.js",
+				"~/Scripts/finance-manager/services/workbook-service.js",
+				"~/Scripts/finance-manager/services/finance-transaction-service.js",
+				"~/Scripts/finance-manager/services/budget-service.js",
+				"~/Scripts/finance-manager/controllers/app.js",
+				"~/Scripts/finance-manager/controllers/workbook-controller.js"
+            ]
+        },
+        {
+            Type: "JavaScript",
+            Path: "~/Content/Bundles/Scripts/Transactions",
+            IncludedFiles: [
+				"~/Scripts/finance-manager/controllers/transaction-controller.js"
+            ]
+        },
+        {
+            Type: "JavaScript",
+            Path: "~/Content/Bundles/Scripts/Budget",
+            IncludedFiles: [
+				"~/Scripts/finance-manager/controllers/budget-controller.js"
+            ]
+        }
+    ]
+}

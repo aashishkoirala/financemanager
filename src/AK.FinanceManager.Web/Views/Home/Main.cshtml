@@ -1,0 +1,113 @@
+﻿@*******************************************************************************************************************************
+ * AK.FinanceManager.Web.Views.Home.Main
+ * Copyright © 2013 Aashish Koirala <http://aashishkoirala.github.io>
+ * 
+ * This file is part of Finance Manager.
+ *  
+ * Finance Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Finance Manager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Finance Manager.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ *******************************************************************************************************************************@
+
+@model SiteViewModel
+@section Head
+{
+    @Scripts.Render("~/Content/Bundles/Scripts/Transactions")
+    @Scripts.Render("~/Content/Bundles/Scripts/Budget")
+}
+
+<div ng-controller="workbookCtrl">
+    <div class="row">
+        <div class="span4">
+            <h2 class="muted" style="font-weight: normal">finance<b>manager</b></h2>
+        </div>
+        <div class="span2" style="padding-top: 15px">
+            <div class="btn-group" ng-show="workbooks.WorkbookList.length > 1">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Change workbook
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="workbook in workbooks.WorkbookList">
+                        <a href="#" ng-click="loadWorkbook(workbook.Id)">{{workbook.Name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="span3" style="padding-top: 10px">
+            <h5>{{workbooks.SelectedWorkbookName}}</h5>
+        </div>
+        <div class="span3 pull-right text-right">
+            <h6>
+                @Model.UserName<br/>
+                @Html.ActionLink("Logout", "Logout")
+            </h6>
+        </div>
+    </div>
+    <div class="navbar" ng-show="workbooks.WorkbookList.length > 0">
+        <div class="navbar-inner tabbable">
+            <ul class="nav nav-stacked">
+                <li class="divider-vertical"></li>
+                <li class="active"><a href="#transactions_tab" data-toggle="tab" ng-click="selectTab('Transactions')">Transactions</a></li>
+                <li class="divider-vertical"></li>
+                <li><a href="#budget_tab" data-toggle="tab" ng-click="selectTab('Budget')">Budget</a></li>
+                <li class="divider-vertical"></li>
+                <li><a href="#setup_tab" data-toggle="tab" ng-click="selectTab('Setup')">Setup</a></li>
+                <li class="divider-vertical"></li>
+                <li><a href="#about_tab" data-toggle="tab" ng-click="selectTab('About')">About</a></li>
+                <li class="divider-vertical"></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="transactions_tab">
+                <br/>
+                @Html.Partial("Transactions", Model)
+            </div>
+            <div class="tab-pane" id="budget_tab">
+                <br/>
+                @Html.Partial("Budget", Model)                
+            </div>
+            <div class="tab-pane" id="setup_tab">
+                <br/>
+                @Html.Partial("Setup", Model)
+            </div>
+            <div class="tab-pane" id="about_tab">
+                <br/>
+                @Html.Partial("About", Model)
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-error" ng-show="workbooks.WorkbookList.length == 0">
+        You do not have access to any workbooks.
+    </div>
+    <div class="modal fade" id="general_modal" ak-modal="showGeneralModal">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h6>{{generalModalHeader}}</h6>
+        </div>
+        <div class="modal-body">
+            <p>{{generalModalMessage}}</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal" ng-click="showGeneralModal=false">Close</a>
+        </div>
+    </div>
+    <div class="modal hide" id="loading_modal" ak-modal="showLoadingModal">
+        <div class="modal-body">
+            <h4>Working...</h4>
+            <div class="progress progress-striped active">
+                <div class="bar" style="width: 100%"></div>
+            </div>            
+        </div>
+    </div>
+</div>

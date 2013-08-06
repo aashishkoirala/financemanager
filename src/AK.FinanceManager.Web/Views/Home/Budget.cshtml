@@ -1,0 +1,167 @@
+﻿@*******************************************************************************************************************************
+ * AK.FinanceManager.Web.Views.Home.Budget
+ * Copyright © 2013 Aashish Koirala <http://aashishkoirala.github.io>
+ * 
+ * This file is part of Finance Manager.
+ *  
+ * Finance Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Finance Manager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Finance Manager.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ *******************************************************************************************************************************@
+
+@model SiteViewModel
+
+<div ng-controller="budgetCtrl" class="font-smaller">
+    <form ng-submit="saveBudget()">
+        <div class="well well-small">
+            <div class="row">
+                <div class="span2">
+                    <div class="btn-group" ng-show="budgetList.length > 0">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            Choose budget
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="budget in budgetList">
+                                <a href="#" ng-click="loadBudget(budget.Id)">{{budget.Name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="span4">
+                    <h5>{{budget.BudgetName}}</h5>
+                </div>
+                <div class="span5">
+                    <div class="pull-right">
+                        &nbsp;&nbsp;
+                        <button type="button" class="btn" title="Create New Budget" data-toggle="modal" href="#create_budget_modal">
+                            <i class="icon-plus-sign"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-primary" ng-click="loadBudget(budget.Id)">
+                            <i class="icon-refresh"></i>
+                            Reload
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="icon-ok"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="cell" colspan="6">Budgeted</th>
+                    <th class="cell" colspan="6">Actual</th>
+                    <th class="cell">Difference</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="cell">In</td>
+                    <td class="cell">{{getBudgetedInTotal() | currency}}</td>
+                    <td class="cell">Out</td>
+                    <td class="cell">{{getBudgetedOutTotal() | currency}}</td>
+                    <td class="cell">Difference</td>
+                    <td class="cell">{{getBudgetedDiffTotal() | currency}}</td>
+                    <td class="cell">In</td>
+                    <td class="cell">{{getActualInTotal() | currency}}</td>
+                    <td class="cell">Out</td>
+                    <td class="cell">{{getActualOutTotal() | currency}}</td>
+                    <td class="cell">Difference</td>
+                    <td class="cell">{{getActualDiffTotal() | currency}}</td>
+                    <td class="cell">{{getDiffTotal() | currency}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped table-bordered table-condensed" ng-show="budget.BudgetItemList.length > 0">
+            <thead>
+                <tr>
+                    <th class="cell">
+                        <a class="pointer" ng-click="sortBy='BudgetHeadingType';sortByReverse=!sortByReverse">
+                            Type
+                            <i class="icon-chevron-up" ng-show="sortBy=='BudgetHeadingType' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='BudgetHeadingType' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                    <th class="cell">
+                        <a class="pointer" ng-click="sortBy='BudgetHeading';sortByReverse=!sortByReverse">
+                            Heading
+                            <i class="icon-chevron-up" ng-show="sortBy=='BudgetHeading' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='BudgetHeading' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                    <th rowspan="2" class="cell">
+                        <a class="pointer" ng-click="sortBy='BudgetedAmount';sortByReverse=!sortByReverse">
+                            Budget Amount
+                            <i class="icon-chevron-up" ng-show="sortBy=='BudgetedAmount' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='BudgetedAmount' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                    <th rowspan="2" class="cell">
+                        <a class="pointer" ng-click="sortBy='ActualAmount';sortByReverse=!sortByReverse">
+                            Actual Amount
+                            <i class="icon-chevron-up" ng-show="sortBy=='ActualAmount' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='ActualAmount' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="cell">
+                        <select class="cell-text" ng-model="budget.FilterBudgetHeadingType" ng-options="bht for bht in budget.BudgetHeadingTypeList"></select>
+                        <i class="icon-remove pointer" ng-click="budget.FilterBudgetHeadingType=null" title="Reset Filter"></i>
+                    </th>
+                    <th class="cell">
+                        <select class="cell-text" ng-model="budget.FilterBudgetHeading" ng-options="bh for bh in budget.BudgetHeadingList"></select>
+                        <i class="icon-remove pointer" ng-click="budget.FilterBudgetHeading=null" title="Reset Filter"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in getBudgetItemList() | orderBy:sortBy:sortByReverse">
+                    <td class="cell">{{item.BudgetHeadingType}}</td>
+                    <td class="vert-middle text-left">{{item.BudgetHeading}}</td>
+                    <td class="cell">
+                        <input class="font-small text-right" required ak-auto-select type="text" ng-model="item.BudgetAmountAsString" ak-blur="formatAmount(item)" />
+                    </td>
+                    <td class="vert-middle text-right">
+                        <p class="text-right">
+                            {{item.ActualAmount | currency}}
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" ng-hide="budget.BudgetItemList.length > 0">
+            No budget items
+        </div>
+    </form>
+    <div class="modal fade" id="create_budget_modal">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>            
+            <h5>Create New Budget</h5>
+        </div>
+        <div class="modal-body">
+            From:
+            <input type="date" ng-model="newBudgetPeriodStartDate"/><br/>
+            To:
+            <input type="date" ng-model="newBudgetPeriodEndDate"/>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="createBudget()" data-dismiss="modal" ng-show="newBudgetPeriodStartDate != '' && newBudgetPeriodEndDate != ''">Create</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+﻿[{	Name: "AppUser",
+	Members: {
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"UserName" : { "Type" : "string" },
+		"WorkbookList" : { "Type" : "System.Collections.Generic.IList<Workbook>" }        
+	}
+}, 
+{	Name: "Workbook",
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Name" : { "Type" : "string" },
+		"FinanceTransactionList" : { "Type" : "System.Collections.Generic.IList<FinanceTransaction>" },
+		"VendorList" : { "Type" : "System.Collections.Generic.IList<Vendor>" },
+		"BudgetHeadingTypeList" : { "Type" : "System.Collections.Generic.IList<BudgetHeadingType>" },
+		"BudgetList" : { "Type" : "System.Collections.Generic.IList<Budget>" }
+	}
+},
+{	Name: "AppUserWorkbook",
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"AppUser" : { Type : "AppUser" },
+		"Workbook" : { Type : "Workbook" }       
+	}
+},
+{	Name: "FinanceTransaction",
+	Members: {
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Workbook" : { Type : "Workbook" },
+		"TransactionDate" : { Type : "DateTime" },
+		"Vendor" : { Type : "Vendor" },
+		"BudgetHeading" : { Type : "BudgetHeading" },
+		"Amount" : { Type : "decimal" },
+		"Notes" : { "Type" : "string" }        
+	}
+},
+{	Name: "Vendor",
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Workbook" : { Type : "Workbook" },
+		"Name" : { "Type" : "string" },
+		"VendorBudgetHeadingList" : { "Type" : "System.Collections.Generic.IList<VendorBudgetHeading>" },
+		"VendorMappingList" : { "Type" : "System.Collections.Generic.IList<VendorMapping>" }
+	}
+},
+{	Name: "BudgetHeading",
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Name" : { "Type" : "string" },
+		"BudgetHeadingType" : { "Type" : "BudgetHeadingType" },
+		"IsAnnualized" : { "Type" : "bool" },
+		"IsBeginningSurplus" : { "Type" : "bool" },
+		"IsEndingSurplus" : { "Type" : "bool" }
+	}
+},
+{	Name: "VendorBudgetHeading",
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Vendor" : { "Type" : "Vendor" },
+		"BudgetHeading" : { "Type" : "BudgetHeading" },
+		"IsDefault" : { "Type" : "bool" }        
+	}
+},
+{	Name: "BudgetHeadingType",
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Workbook" : { Type : "Workbook" },
+		"Name" : { "Type" : "string" },
+		"IsMoneyComingIn" : { "Type" : "bool" },
+		"BudgetHeadingList" : { "Type" : "System.Collections.Generic.IList<BudgetHeading>" }        
+	}
+},
+{	Name: "VendorMapping", 
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Vendor" : { "Type" : "Vendor" },
+		"MappedName" : { "Type" : "string" }        
+	}
+},
+{	Name: "Budget",
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Workbook" : { Type : "Workbook" },
+		"PeriodStartDate" : { Type : "DateTime" },
+		"PeriodEndDate" : { Type : "DateTime" },
+		"BudgetItemList" : { "Type" : "System.Collections.Generic.IList<BudgetItem>" }        
+	}
+},
+{	Name: "BudgetItem", 
+	Members: {    
+		"Id" : { "Type" : "int", "IsPrimaryKey" : "true" },
+		"Budget" : { Type : "Budget" },
+		"BudgetHeading" : { Type : "BudgetHeading" },
+		"Amount" : { Type : "decimal" }
+	}
+}]

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="ak.commons.configuration" type="AK.Commons.Configuration.Sections.ApplicationSettingsConfigurationSection, AK.Commons"/>
+  </configSections>
+  <ak.commons.configuration>
+    <applicationSettings>
+      <application>
+        <settings />
+        <tokens />
+      </application>
+      <application name="FinanceManager">
+        <settings>
+          <setting name="ak.commons.composition.modulesdirectories" type="System.String" value="~/bin" />
+          <setting name="ak.commons.web.bundling.provider" type="System.String" value="Microsoft" />          
+          <setting name="ak.commons.web.security.webauth.provider" type="System.String" value="Google" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.provider" type="System.String" value="FluentNHibernate" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.connection.provider" type="System.String" value="NHibernate.Connection.DriverConnectionProvider" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.connection.driver_class" type="System.String" value="NHibernate.Driver.SqlClientDriver" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.connection.connection_string" type="System.String" value="Server=(local);Database=FinanceManager_Dev;Integrated Security=SSPI;" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.show_sql" type="System.String" value="false" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.generate_statistics" type="System.String" value="true" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.dialect" type="System.String" value="NHibernate.Dialect.MsSql2005Dialect" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.current_session_context_class" type="System.String" value="thread_static" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.use_outer_join" type="System.String" value="true" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.adonet.batch_size" type="System.String" value="20" />
+          <setting name="ak.commons.dataaccess.uowfactory.FinanceManager.query.substitutions" type="System.String" value="true 1, false 0, yes 'Y', no 'N'" />
+          <setting name="ak.commons.providers.logging.textfileloggingprovider.enabled" type="System.Boolean" value="true" />
+          <setting name="ak.commons.providers.logging.textfileloggingprovider.filepath" type="System.String" value="~/Logs" />
+        </settings>
+        <tokens></tokens>
+      </application>
+    </applicationSettings>
+  </ak.commons.configuration>
+</configuration>

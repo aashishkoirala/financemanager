@@ -1,0 +1,9 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetDir)AK.Commons.dll" #>
+<#@ assembly name="$(TargetDir)AK.Modeling.TextTemplating.dll" #>
+<#@ assembly name="$(TargetDir)AK.FinanceManager.Model.dll" #>
+<#@ import namespace="AK.Modeling.TextTemplating.Entities" #>
+<#@ import namespace="AK.FinanceManager.Model" #>
+<#@ output extension=".generated.cs" #>
+<#= EntityUtility.GenerateRepositoriesFromResources("AK.FinanceManager.DataAccess.Repositories", typeof(Stub).Assembly, "AK.FinanceManager.Model.Entities.json") #>

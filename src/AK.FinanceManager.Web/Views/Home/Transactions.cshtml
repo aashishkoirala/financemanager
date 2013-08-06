@@ -1,0 +1,141 @@
+﻿@*******************************************************************************************************************************
+ * AK.FinanceManager.Web.Views.Home.Transactions
+ * Copyright © 2013 Aashish Koirala <http://aashishkoirala.github.io>
+ * 
+ * This file is part of Finance Manager.
+ *  
+ * Finance Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Finance Manager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Finance Manager.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ *******************************************************************************************************************************@
+
+@model SiteViewModel
+
+<div ng-controller="transactionCtrl" class="font-smaller">
+    <form ng-submit="saveTransactions()">
+        <div class="well well-small">
+            <div class="row">
+                <div class="span3">
+                    Transactions From:
+                    <input type="date" ng-model="transactions.TransactionFromDateAsString" />
+                </div>
+                <div class="span3">
+                    Transactions To: <i>(optional)</i>
+                    <input type="date" ng-model="transactions.TransactionToDateAsString"/>
+                    <input type="hidden" ng-model="transactions.WorkbookId"/>
+                </div>
+                <div class="span4 pull-right">
+                    <div class="pull-right">
+                        &nbsp;&nbsp;
+                        <button class="btn" ng-click="addTransaction()" title="Add New Transaction">
+                            <i class="icon-plus-sign"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-primary" ng-click="loadTransactions()">
+                            <i class="icon-refresh"></i>
+                            Load
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="icon-ok"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-condensed" ng-show="transactions.FinanceTransactionList.length > 0">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="cell"></th>
+                    <th rowspan="2" class="cell">
+                        <a class="pointer" ng-click="sortBy='TransactionDateAsString';sortByReverse=!sortByReverse">
+                            Date
+                            <i class="icon-chevron-up" ng-show="sortBy=='TransactionDateAsString' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='TransactionDateAsString' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                    <th class="cell">
+                        <a class="pointer" ng-click="sortBy='VendorId';sortByReverse=!sortByReverse">
+                            Vendor
+                            <i class="icon-chevron-up" ng-show="sortBy=='VendorId' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='VendorId' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                    <th class="cell">
+                        <a class="pointer" ng-click="sortBy='BudgetHeadingId';sortByReverse=!sortByReverse">
+                            Heading
+                            <i class="icon-chevron-up" ng-show="sortBy=='BudgetHeadingId' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='BudgetHeadingId' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                    <th rowspan="2" class="cell">
+                        <a class="pointer" ng-click="sortBy='AmountAsString';sortByReverse=!sortByReverse">
+                            Amount
+                            <i class="icon-chevron-up" ng-show="sortBy=='AmountAsString' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='AmountAsString' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                    <th class="vert-middle text-left">
+                        <a class="pointer" ng-click="sortBy='Notes';sortByReverse=!sortByReverse">
+                            Notes
+                            <i class="icon-chevron-up" ng-show="sortBy=='Notes' && sortByReverse==false"></i>
+                            <i class="icon-chevron-down" ng-show="sortBy=='Notes' && sortByReverse==true"></i>
+                        </a>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="cell">
+                        <select class="cell-text" ng-model="transactions.FilterVendorId" ng-options="vendor.Id as vendor.Name for vendor in transactions.VendorList"></select>
+                        <i class="icon-remove pointer" ng-click="transactions.FilterVendorId=null" title="Reset Filter"></i>
+                    </th>
+                    <th class="cell">
+                        <select class="cell-text" ng-model="transactions.FilterBudgetHeadingTypeId" ng-options="bht.Id as bht.Name for bht in transactions.BudgetHeadingTypeList"></select>
+                        <select class="cell-text" ng-model="transactions.FilterBudgetHeadingId" ng-options="bh.Id as bh.Name for bh in transactions.FilterBudgetHeadingList"></select>
+                        <i class="icon-remove pointer" ng-click="transactions.FilterBudgetHeadingId=null;transactions.FilterBudgetHeadingTypeId=null" title="Reset Filter"></i>
+                    </th>
+                    <th class="vert-middle text-left">
+                        <input class="font-small" type="text" ak-auto-select ng-model="transactions.FilterNotes" />
+                        <i class="icon-remove pointer" ng-click="transactions.FilterNotes=null" title="Reset Filter"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transaction in getTransactionList() | filter:IsMarkedForDeletion == false | orderBy:sortBy:sortByReverse">
+                    <td class="cell">
+                        <i class="icon-remove pointer" title="Remove Transaction" ng-click="transaction.IsMarkedForDeletion = true"></i>
+                    </td>
+                    <td class="cell">
+                        <input class="font-small" style="max-width: 120px" required type="date" ak-focus="$parent.selectTransaction(transaction.Id)" ng-model="transaction.TransactionDateAsString" />
+                    </td>
+                    <td class="cell">
+                        <select class="cell-text" required ng-model="transaction.VendorId" ak-focus="$parent.selectTransaction(transaction.Id)" ng-options="vendor.Id as vendor.Name for vendor in transactions.VendorList" />
+                    </td>
+                    <td class="cell">
+                        <select class="font-small" style="max-width: 80px" required ng-model="transaction.BudgetHeadingTypeId" ak-focus="$parent.selectTransaction(transaction.Id)" ng-options="bht.Id as bht.Name for bht in transactions.BudgetHeadingTypeList"></select>
+                        <select class="font-small" style="max-width: 120px" required ng-model="transaction.BudgetHeadingId" ak-focus="$parent.selectTransaction(transaction.Id)" ng-options="bh.Id as bh.Name for bh in transaction.BudgetHeadingList"></select>
+                    </td>
+                    <td class="cell">
+                        <input class="font-small text-right" style="max-width: 80px;" required ak-auto-select ak-focus="$parent.selectTransaction(transaction.Id)" type="text" ng-model="transaction.AmountAsString" ak-blur="formatAmount(transaction)" />
+                    </td>
+                    <td class="vert-middle text-left">
+                        <input class="font-small" type="text" ak-auto-select ak-focus="$parent.selectTransaction(transaction.Id)" ng-model="transaction.Notes" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" ng-hide="transactions.FinanceTransactionList.length > 0">
+            No transactions
+        </div>
+    </form>
+</div>
